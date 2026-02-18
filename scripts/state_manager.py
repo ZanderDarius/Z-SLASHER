@@ -34,6 +34,7 @@ import pygame
 
 from scripts.logger import get_logger
 from scripts.ui_widgets import ScrollableListWidget
+from scripts.version import get_version_label
 
 _state_log = get_logger("state")
 
@@ -180,6 +181,7 @@ class MenuState(State):
         self.start_game = False
         self.next_state: str | None = None  # for submenu transitions
         self._ui = UI
+        self.version_label = get_version_label()
 
     def handle_actions(self, actions: Sequence[str]) -> None:
         for act in actions:
@@ -219,6 +221,7 @@ class MenuState(State):
         UI.render_menu_bg(surface, self.display, self.bg)
         UI.render_menu_title(surface, self.loc.translate("menu.title"), surface.get_width() // 2, 200)
         self.list_widget.render(surface, surface.get_width() // 2, 300)
+        UI.render_menu_ui_element(surface, self.version_label, 10, 10)
         UI.render_menu_ui_element(
             surface,
             self.loc.translate("menu.enter_hint")
